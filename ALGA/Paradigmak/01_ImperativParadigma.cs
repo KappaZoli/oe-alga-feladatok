@@ -24,9 +24,13 @@ namespace OE.ALGA.Paradigmak
     {
        void Vegrehajtas();
     }
+    public interface IEnumerable<T>
+    {
+       public IEnumerator<T> GetEnumerator();
+    }
 
- 
-    public class FeladatTarolo<T> where T : IVegrehajthato
+
+    public class FeladatTarolo<T> : IEnumerable<T> where T : IVegrehajthato
     {
         public T[] Tarolo { get; set; }
         public int n = 0;
@@ -56,6 +60,14 @@ namespace OE.ALGA.Paradigmak
             {
 
                 Tarolo[i].Vegrehajtas();
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < n; i++)
+            {
+                yield return Tarolo[i];
             }
         }
     }
