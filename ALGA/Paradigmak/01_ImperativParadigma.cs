@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace OE.ALGA.Paradigmak
 {
@@ -14,38 +15,29 @@ namespace OE.ALGA.Paradigmak
     }
     public interface IFuggo
     {
-        public bool FuggosegTeljesul { set; }
+        public bool FuggosegTeljesul { get; }
 
 
     }
 
     public interface IVegrehajthato
     {
-        void Vegrehajtas();
+       void Vegrehajtas();
     }
 
-    public interface IEnumerable
+ 
+    public class FeladatTarolo<T> where T : IVegrehajthato
     {
-        public void BejaroLetrehozas();
-    }
-    public interface IEnumerator
-    {
-        public IVegrehajthato T { get; set; }
-        public void Alaphelyzet();
-        public bool Kovetkezo();
-    }
-    public class FeladatTarolo : IVegrehajthato
-    {
-        public IVegrehajthato[] Tarolo { get; set; }
+        public T[] Tarolo { get; set; }
         public int n = 0;
 
         public FeladatTarolo(int n)
         {
-            Tarolo = new IVegrehajthato[n];
+            Tarolo = new T[n];
 
         }
 
-        public void Felvesz(IVegrehajthato feladat)
+        public void Felvesz(T feladat)
         {
             if (n < Tarolo.Length)
             {
@@ -58,12 +50,7 @@ namespace OE.ALGA.Paradigmak
             }
         }
 
-        public void Vegrehajtas()
-        {
-
-        }
-
-        public void MindentVegrehajt(IVegrehajthato elem)
+        public void MindentVegrehajt()
         {
             for (int i = 0; i < n; i++)
             {
@@ -72,7 +59,7 @@ namespace OE.ALGA.Paradigmak
             }
         }
     }
-    public class FuggoFeladatTarolo : FeladatTarolo, IFuggo, IVegrehajthato
+    public class FuggoFeladatTarolo<T> :  FeladatTarolo<T> where T : IVegrehajthato, IFuggo
     {
        
         public FuggoFeladatTarolo(int n) : base(n)
@@ -80,18 +67,22 @@ namespace OE.ALGA.Paradigmak
            
         }
 
-        public bool FuggosegTeljesul { get;  set; }
-
-        public override void MindentVegrehajt(IVegrehajthato vegrehajthato)
+        public void MindentVegrehajt()
         {
             for (int i = 0; i < n; i++)
             {
-                if (FuggosegTeljesul) Tarolo[i].Vegrehajtas();
+                if (Tarolo[i].FuggosegTeljesul)
+                {
+                    Tarolo[i].Vegrehajtas();
+                }
             }
 
         }
-       
+
+
     }
+
+    
 
     
 }
