@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Channels;
 
 namespace OE.ALGA.Paradigmak
 {
     // 1. heti labor feladat - Tesztek: 01_ImperativParadigmaTesztek.cs
+    //Zalan
     public class TaroloMegteltKivetel : Exception
     {
         public TaroloMegteltKivetel(string msg)
@@ -22,11 +21,11 @@ namespace OE.ALGA.Paradigmak
 
     public interface IVegrehajthato
     {
-       void Vegrehajtas();
+        void Vegrehajtas();
     }
     public interface IEnumerable<T>
     {
-       public IEnumerator<T> GetEnumerator();
+        public IEnumerator<T> GetEnumerator();
     }
 
 
@@ -71,12 +70,12 @@ namespace OE.ALGA.Paradigmak
             }
         }
     }
-    public class FuggoFeladatTarolo<T> :  FeladatTarolo<T> where T : IVegrehajthato, IFuggo
+    public class FuggoFeladatTarolo<T> : FeladatTarolo<T> where T : IVegrehajthato, IFuggo
     {
-       
+
         public FuggoFeladatTarolo(int n) : base(n)
         {
-           
+
         }
 
         public void MindentVegrehajt()
@@ -94,8 +93,8 @@ namespace OE.ALGA.Paradigmak
 
     }
 
-    
 
-    
+
+
 }
 

@@ -50,7 +50,7 @@
         {
         }
 
-        
+
 
         public static Pozicio operator +(Pozicio p, Irany m) => new Pozicio(p.X + m.X, p.Y + m.Y);
         public static double Tavolsag(Pozicio a, Pozicio b) => Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
