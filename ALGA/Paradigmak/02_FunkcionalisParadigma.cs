@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace OE.ALGA.Paradigmak
 {
     public class FeltetelesFeladatTarolo<T> : FeladatTarolo<T>, IEnumerable<T> where T : IVegrehajthato
     {
-        public int n { get; set; }
+        
         public Func<T, bool> BejaroFeltetel { get; set; }
         public FeltetelesFeladatTarolo(int n) : base(n)
         {
@@ -13,43 +14,24 @@ namespace OE.ALGA.Paradigmak
         }
 
         public IEnumerator<T> GetEnumerator()
-
         {
-
             if (BejaroFeltetel == null)
-
             {
-
                 for (int i = 0; i < n; i++)
-
                 {
-
                     yield return Tarolo[i];
-
                 }
-
             }
-
             else
-
             {
-
                 for (int i = 0; i < n; i++)
-
                 {
-
                     if (BejaroFeltetel(Tarolo[i]))
-
                     {
-
                         yield return Tarolo[i];
-
                     }
-
                 }
-
             }
-
         }
 
         public void FeltetelesVegrehajtas(Func<T, bool> fuggoseg)
@@ -64,19 +46,45 @@ namespace OE.ALGA.Paradigmak
         }
 
 
-        public void FeltetesFeladatTárolóBejáró(Func<T, bool> fuggoseg)
-        {
-            for (int i = 0; i < n; i++)
-            {
-                if (fuggoseg(Tarolo[i]))
-                {
-                    fuggoseg(Tarolo[i]);
-
-                }
-            }
-
-
-        }
+       
 
     }
+
+    public class FeltetelesFeladatTaroloBejaro<T> : IEnumerator<T> where T : IVegrehajthato
+    {
+
+        int n;
+        int index=-1;
+        FeltetelesFeladatTarolo<T> tarolo;
+        Func<T, bool> BejaroFeltetel;
+
+
+        public FeltetelesFeladatTaroloBejaro(FeltetelesFeladatTarolo<T> tarolo, int n, Func<T, bool> BejaroFeltetel)
+        {
+            this.tarolo = tarolo;
+            this.n = n;
+            this.BejaroFeltetel = BejaroFeltetel;
+        }
+        public T Current { get; }
+
+        object IEnumerator.Current => Current;
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+        
+    
 }
