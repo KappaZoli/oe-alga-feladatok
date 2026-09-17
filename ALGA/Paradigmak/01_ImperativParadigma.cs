@@ -97,4 +97,3 @@ namespace OE.ALGA.Paradigmak
 
 
 }
-

@@ -6,7 +6,7 @@ namespace OE.ALGA.Paradigmak
 {
     public class FeltetelesFeladatTarolo<T> : FeladatTarolo<T>, IEnumerable<T> where T : IVegrehajthato
     {
-        
+
         public Func<T, bool> BejaroFeltetel { get; set; }
         public FeltetelesFeladatTarolo(int n) : base(n)
         {
@@ -46,7 +46,7 @@ namespace OE.ALGA.Paradigmak
         }
 
 
-       
+
 
     }
 
@@ -54,7 +54,7 @@ namespace OE.ALGA.Paradigmak
     {
 
         int n;
-        int index=-1;
+        int index = -1;
         FeltetelesFeladatTarolo<T> tarolo;
         Func<T, bool> BejaroFeltetel;
 
@@ -84,7 +84,7 @@ namespace OE.ALGA.Paradigmak
             throw new NotImplementedException();
         }
     }
-    
-        
-    
+
+
+
 }
