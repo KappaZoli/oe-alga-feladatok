@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace OE.ALGA.Adatszerkezetek
 {
     // 3. heti labor feladat - Tesztek: 03_TombImplementacioTesztek.cs
-    public class TombVerem<T> : Verem<T>
+    public class TombVerem<T> : Verem<T> //Verem: FILO (First In Last Out) elv alapján tárolja az elemeket, az utolsóként betett elem kerül ki először.
     {
         public T[] E;
 
         public int n;
-        public bool Ures { get; }
+        public bool Ures { get { return n == 0; } }
 
         public TombVerem(int meret)
         {
@@ -18,7 +20,7 @@ namespace OE.ALGA.Adatszerkezetek
         }
         public T Felso()
         {
-            throw new System.NotImplementedException();
+            return E[n-1];
         }
 
         public void Verembe(T ertek)
@@ -30,7 +32,7 @@ namespace OE.ALGA.Adatszerkezetek
             }
             else
             {
-                throw new NincsElemKivetel();
+                throw new NincsHelyKivetel();
 
             }
 
@@ -50,23 +52,167 @@ namespace OE.ALGA.Adatszerkezetek
         }
     }
 
-    public class TombSor<T> : Sor<T>
+    public class TombSor<T> : Sor<T> //Sor: olyan sorrendbe tartja az elemeket, ahogy bekerültek, FIFO (First In First Out) elv alapján és kiolvassa őket. Az elsőként betett elem kerül ki először.
     {
-        public bool Ures => throw new NotImplementedException();
+        public T[] E;
+        public int n;
+        public int u; //utolso elem indexe
 
+        public int e; //elso elem indexe
+        public bool Ures { get { return n == 0; } }
+
+
+        public TombSor(int meret)
+        {
+            E = new T[meret];
+            n = 0;
+            e = 0;
+            u = 0;
+        }
         public void Sorba(T ertek)
         {
-            throw new NotImplementedException();
+            if (n < E.Length)
+            {
+                n++;
+                u = (u + 1) % E.Length;
+                E[u] = ertek;
+                
+               
+            }
+            else
+            {
+                throw new NincsHelyKivetel();
+
+            }
         }
 
         public T Sorbol()
         {
-            throw new NotImplementedException();
+            if (n < E.Length)
+            {
+             
+                return E[e++ % E.Length];
+
+
+            }
+            else
+            {
+                throw new NincsElemKivetel();
+
+            }
         }
 
         public T Elso()
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class TombLista<T> : Lista<T>, IEnumerable<T> //Lista: olyan adatszerkezet, amely lehetővé teszi az elemek dinamikus tárolását és kezelését. Az elemeket sorban tárolja, és lehetővé teszi az elemek hozzáadását, eltávolítását és elérését.
+    {
+        public T[] E;
+        public int n;
+     
+
+        public int Elemszam { get; private set; }
+        public TombLista()
+        {
+            E = new T[5];
+            n = 5;
+            Elemszam = 0;
+
+        }
+
+
+        public T Kiolvas(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Modosit(int index, T ertek)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Hozzafuz(T ertek)
+        {
+            if(Elemszam >= n)
+            {
+                T[] ujE = new T[n * 2];
+                for (int i = 0; i < n; i++)
+                {
+                    ujE[i] = E[i];
+                }
+                E = ujE;
+                n = ujE.Length;
+            }
+            else
+            {
+                E[Elemszam] = ertek;
+                Elemszam++;
+            }
+            
+        }
+
+        public void Beszur(int index, T ertek)
+        {
+            if (Elemszam <= n + 1)
+            {
+                if (Elemszam == n)
+                {
+                    T[] ujE = new T[n * 2];
+                    for (int i = 0; i < n; i++)
+                    {
+                        ujE[i] = E[i];
+                    }
+                    E = ujE;
+                    n = ujE.Length;
+
+                }
+                n++;
+                for (int i = Elemszam; i > index; i--)
+                {
+                    E[i] = E[i - 1];
+                }
+                E[index] = ertek;
+            }
+            else
+            {
+                throw new HibasIndexKivetel();
+            }
+        }
+
+        public void Torol(T ertek)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Bejar(Action<T> muvelet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public class TombListaBejaro<T> : IEnumerable<T>
+    {
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
