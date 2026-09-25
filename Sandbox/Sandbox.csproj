@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ALGAme\ALGAme.csproj" />
+    <ProjectReference Include="..\ALGA\ALGA.csproj" />
+    <ProjectReference Include="..\Engine\Engine.csproj" />
+    <ProjectReference Include="..\Tesztek\Tesztek.csproj" />
+  </ItemGroup>
+
 </Project>

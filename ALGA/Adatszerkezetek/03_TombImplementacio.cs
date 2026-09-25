@@ -5,6 +5,13 @@ using System.Drawing;
 
 namespace OE.ALGA.Adatszerkezetek
 {
+    internal class Program
+    {
+        static void Main()
+        {
+            
+        }
+    }
     // 3. heti labor feladat - Tesztek: 03_TombImplementacioTesztek.cs
     public class TombVerem<T> : Verem<T> //Verem: FILO (First In Last Out) elv alapján tárolja az elemeket, az utolsóként betett elem kerül ki először.
     {
@@ -74,7 +81,7 @@ namespace OE.ALGA.Adatszerkezetek
             if (n < E.Length)
             {
                 n++;
-                u = (u + 1) % E.Length;
+                u = (u+1)% E.Length ;
                 E[u] = ertek;
                 
                
@@ -88,12 +95,12 @@ namespace OE.ALGA.Adatszerkezetek
 
         public T Sorbol()
         {
-            if (n < E.Length)
+            if (n > 0)
             {
-             
-                return E[e++ % E.Length];
-
-
+                n--;
+                e=(e+1) % E.Length;
+                return E[e];
+                
             }
             else
             {
@@ -104,7 +111,8 @@ namespace OE.ALGA.Adatszerkezetek
 
         public T Elso()
         {
-            throw new NotImplementedException();
+            
+            return E[e];
         }
     }
 
@@ -215,4 +223,9 @@ namespace OE.ALGA.Adatszerkezetek
             return GetEnumerator();
         }
     }
+
+
+
+
+
 }
