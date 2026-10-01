@@ -112,7 +112,15 @@ namespace OE.ALGA.Adatszerkezetek
         public T Elso()
         {
             
-            return E[e];
+           if(n>0)
+            {
+               
+                return E[(e + 1) % E.Length];
+            }
+            else
+            {
+                throw new NincsElemKivetel();
+            }
         }
     }
 
@@ -120,7 +128,9 @@ namespace OE.ALGA.Adatszerkezetek
     {
         public T[] E;
         public int n;
-     
+
+        public bool Ures { get{ return n == 0; } }
+
 
         public int Elemszam { get; private set; }
         public TombLista()
@@ -134,12 +144,12 @@ namespace OE.ALGA.Adatszerkezetek
 
         public T Kiolvas(int index)
         {
-            throw new NotImplementedException();
+            return E[index];
         }
 
         public void Modosit(int index, T ertek)
         {
-            throw new NotImplementedException();
+            E[index] = ertek;
         }
 
         public void Hozzafuz(T ertek)
@@ -192,12 +202,26 @@ namespace OE.ALGA.Adatszerkezetek
 
         public void Torol(T ertek)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Elemszam; i++)
+            {
+                if (E[i].Equals(ertek))
+                {
+                    for (int j = i; j < Elemszam - 1; j++)
+                    {
+                        E[j] = E[j + 1];
+                    }
+                    Elemszam--;
+                    
+                }
+            }
         }
 
         public void Bejar(Action<T> muvelet)
         {
-            throw new NotImplementedException();
+            foreach (var item in E)
+            {
+                muvelet(item);
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
