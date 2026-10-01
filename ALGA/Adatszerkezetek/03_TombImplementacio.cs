@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace OE.ALGA.Adatszerkezetek
 {
@@ -126,19 +127,18 @@ namespace OE.ALGA.Adatszerkezetek
 
     public class TombLista<T> : Lista<T>, IEnumerable<T> //Lista: olyan adatszerkezet, amely lehetővé teszi az elemek dinamikus tárolását és kezelését. Az elemeket sorban tárolja, és lehetővé teszi az elemek hozzáadását, eltávolítását és elérését.
     {
-        public T[] E;
-        public int n;
+        public T[] E= new T[5];
+        public int n=0;
 
-        public bool Ures { get{ return n == 0; } }
+        public bool Ures { get; private set; }
 
+        
 
-        public int Elemszam { get; private set; }
+        public int Elemszam { get { return n; } }
+
         public TombLista()
         {
-            E = new T[5];
-            n = 5;
-            Elemszam = 0;
-
+            
         }
 
 
@@ -154,41 +154,39 @@ namespace OE.ALGA.Adatszerkezetek
 
         public void Hozzafuz(T ertek)
         {
-            if(Elemszam >= n)
+            if(n >= E.Length)
             {
-                T[] ujE = new T[n * 2];
+                T[] ujE = new T[E.Length * 2];
                 for (int i = 0; i < n; i++)
                 {
                     ujE[i] = E[i];
                 }
                 E = ujE;
-                n = ujE.Length;
-            }
-            else
-            {
-                E[Elemszam] = ertek;
-                Elemszam++;
+              
             }
             
+                E[n] = ertek;
+                n++;
+                
+                        
         }
 
         public void Beszur(int index, T ertek)
         {
-            if (Elemszam <= n + 1)
+            if (index <= n && index >= 0)
             {
-                if (Elemszam == n)
+                if (E.Length <= n)
                 {
-                    T[] ujE = new T[n * 2];
+                    T[] ujE = new T[E.Length * 2];
                     for (int i = 0; i < n; i++)
                     {
                         ujE[i] = E[i];
                     }
                     E = ujE;
-                    n = ujE.Length;
-
+                    
                 }
                 n++;
-                for (int i = Elemszam; i > index; i--)
+                for (int i = n-1; i > index; i--)
                 {
                     E[i] = E[i - 1];
                 }
@@ -202,31 +200,37 @@ namespace OE.ALGA.Adatszerkezetek
 
         public void Torol(T ertek)
         {
-            for (int i = 0; i < Elemszam; i++)
+            int db = 0;
+            for (int i = 0; i < n; i++)
             {
-                if (E[i].Equals(ertek))
+                if (object.Equals(E[i], ertek))
                 {
-                    for (int j = i; j < Elemszam - 1; j++)
-                    {
-                        E[j] = E[j + 1];
-                    }
-                    Elemszam--;
-                    
+                    db++; 
+                }
+                else
+                {
+                    E[i-db] = E[i];
                 }
             }
+            n =n-db;
+            
+
         }
 
         public void Bejar(Action<T> muvelet)
         {
-            foreach (var item in E)
+            for (int i = 0; i < n; i++)
             {
-                muvelet(item);
+                muvelet(E[i]);
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < n; i++)
+            {
+                yield return E[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

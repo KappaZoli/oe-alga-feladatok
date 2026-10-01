@@ -4,12 +4,14 @@ using OE.ALGA.ALGAme;
 //Jatek jatek = new Jatek();
 //jatek.Start();
 
-TombSor<int> sor = new TombSor<int>(3);
-sor.Sorba(1);
-sor.Sorba(3);
-sor.Sorba(2);
+TombLista<int> lista = new TombLista<int>();
+lista.Hozzafuz(1);
+lista.Hozzafuz(3);
+lista.Hozzafuz(1);
+lista.Torol(0);
 
-for (int i = 0; i < 4; i++)
+
+for (int i = 0; i < lista.Elemszam; i++)
 {
-    Console.WriteLine(sor.Sorbol());
+    Console.WriteLine(lista.Kiolvas(i));
 }
