@@ -171,7 +171,7 @@ namespace OE.ALGA.Adatszerkezetek
                         
         }
 
-        public void Beszur(int index, T ertek)
+        public void Hozzafuz(int index, T ertek)
         {
             if (index <= n && index >= 0)
             {

@@ -1,4 +1,6 @@
-﻿namespace OE.ALGA.Sandbox
+﻿using OE.ALGA.Adatszerkezetek;
+
+namespace OE.ALGA.Sandbox
 {
     internal class Program
     {
@@ -13,8 +15,8 @@
                 • Tesztek – A heti feladatokhoz tartozó unit tesztek
             */
 
+          
 
-            
 
         }
     }

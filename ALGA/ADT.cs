@@ -9,7 +9,7 @@ namespace OE.ALGA
         public T Kiolvas(int index);
         public void Modosit(int index, T ertek);
         public void Hozzafuz(T ertek);
-        public void Beszur(int index, T ertek);
+        public void Hozzafuz(int index, T ertek);
         public void Torol(T ertek);
         public void Bejar(Action<T> muvelet);
     }
