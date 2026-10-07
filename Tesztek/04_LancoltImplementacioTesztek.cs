@@ -33,11 +33,11 @@ namespace OE.ALGA.Tesztek.Adatszerkezetek
         public void Beszuras()
         {
             Lista<int> l = new LancoltLista<int>();
-            l.Hozzafuz(0, 1);
-            l.Hozzafuz(0, 2);
-            l.Hozzafuz(1, 3);
-            l.Hozzafuz(3, 4);
-            l.Hozzafuz(2, 5);
+            l.Beszur(0, 1);
+            l.Beszur(0, 2);
+            l.Beszur(1, 3);
+             l.Beszur(3, 4);
+            l.Beszur(2, 5);;
             Assert.Multiple(() =>
             {
                 Assert.That(l.Kiolvas(0), Is.EqualTo(2));
@@ -51,11 +51,11 @@ namespace OE.ALGA.Tesztek.Adatszerkezetek
         public void BeszurasUres()
         {
             Lista<string> l = new LancoltLista<string>();
-            l.Hozzafuz(0, "1");
-            l.Hozzafuz(0, "2");
-            l.Hozzafuz(1, "");
-            l.Hozzafuz(3, "");
-            l.Hozzafuz(2, "5");
+            l.Beszur(0, "1");
+            l.Beszur(0, "2");
+            l.Beszur(1, "");
+            l.Beszur(3, "");
+            l.Beszur(2, "5");
             Assert.Multiple(() =>
             {
                 Assert.That(l.Kiolvas(0), Is.EqualTo("2"));

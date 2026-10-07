@@ -10,7 +10,7 @@ namespace OE.ALGA.Adatszerkezetek
     {
         static void Main()
         {
-            
+
         }
     }
     // 3. heti labor feladat - Tesztek: 03_TombImplementacioTesztek.cs
@@ -28,7 +28,7 @@ namespace OE.ALGA.Adatszerkezetek
         }
         public T Felso()
         {
-            return E[n-1];
+            return E[n - 1];
         }
 
         public void Verembe(T ertek)
@@ -82,10 +82,10 @@ namespace OE.ALGA.Adatszerkezetek
             if (n < E.Length)
             {
                 n++;
-                u = (u+1)% E.Length ;
+                u = (u + 1) % E.Length;
                 E[u] = ertek;
-                
-               
+
+
             }
             else
             {
@@ -99,9 +99,9 @@ namespace OE.ALGA.Adatszerkezetek
             if (n > 0)
             {
                 n--;
-                e=(e+1) % E.Length;
+                e = (e + 1) % E.Length;
                 return E[e];
-                
+
             }
             else
             {
@@ -112,10 +112,10 @@ namespace OE.ALGA.Adatszerkezetek
 
         public T Elso()
         {
-            
-           if(n>0)
+
+            if (n > 0)
             {
-               
+
                 return E[(e + 1) % E.Length];
             }
             else
@@ -127,18 +127,18 @@ namespace OE.ALGA.Adatszerkezetek
 
     public class TombLista<T> : Lista<T>, IEnumerable<T> //Lista: olyan adatszerkezet, amely lehetővé teszi az elemek dinamikus tárolását és kezelését. Az elemeket sorban tárolja, és lehetővé teszi az elemek hozzáadását, eltávolítását és elérését.
     {
-        public T[] E= new T[5];
-        public int n=0;
+        public T[] E = new T[5];
+        public int n = 0;
 
         public bool Ures { get; private set; }
 
-        
+
 
         public int Elemszam { get { return n; } }
 
         public TombLista()
         {
-            
+
         }
 
 
@@ -154,7 +154,7 @@ namespace OE.ALGA.Adatszerkezetek
 
         public void Hozzafuz(T ertek)
         {
-            if(n >= E.Length)
+            if (n >= E.Length)
             {
                 T[] ujE = new T[E.Length * 2];
                 for (int i = 0; i < n; i++)
@@ -162,16 +162,17 @@ namespace OE.ALGA.Adatszerkezetek
                     ujE[i] = E[i];
                 }
                 E = ujE;
-              
-            }
-            
-                E[n] = ertek;
-                n++;
-                
-                        
-        }
 
-        public void Hozzafuz(int index, T ertek)
+            }
+
+            E[n] = ertek;
+            n++;
+
+
+        }
+     
+
+        public void Beszur(int index, T ertek)
         {
             if (index <= n && index >= 0)
             {
@@ -183,10 +184,10 @@ namespace OE.ALGA.Adatszerkezetek
                         ujE[i] = E[i];
                     }
                     E = ujE;
-                    
+
                 }
                 n++;
-                for (int i = n-1; i > index; i--)
+                for (int i = n - 1; i > index; i--)
                 {
                     E[i] = E[i - 1];
                 }
@@ -205,15 +206,15 @@ namespace OE.ALGA.Adatszerkezetek
             {
                 if (object.Equals(E[i], ertek))
                 {
-                    db++; 
+                    db++;
                 }
                 else
                 {
-                    E[i-db] = E[i];
+                    E[i - db] = E[i];
                 }
             }
-            n =n-db;
-            
+            n = n - db;
+
 
         }
 
@@ -251,9 +252,4 @@ namespace OE.ALGA.Adatszerkezetek
             return GetEnumerator();
         }
     }
-
-
-
-
-
 }

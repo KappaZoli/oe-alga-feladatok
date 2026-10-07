@@ -139,7 +139,7 @@ namespace OE.ALGA.Adatszerkezetek
             }
         }
 
-        public void Hozzafuz(int index, T ertek)
+        public void Beszur(int index, T ertek)
         {
             if (fej == null || index == 0)
             {
