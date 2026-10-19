@@ -101,21 +101,27 @@ namespace OE.ALGA.Adatszerkezetek
             }
             else
             {
-                SzotarElem<K, T> e;
+                SzotarElem<K, T>? e = null;
 
                 U.Bejar(x => {
                     if (object.Equals(x.kulcs, kulcs))
                     {
                         e = x;
-                        U.Torol(e);
+                        
                     }
 
                 });
 
-                if (e != null)
+                if(e != null)
                 {
-
+                    U.Torol(e);
                 }
+                else
+                {
+                    throw new HibasKulcsKivetel();
+                }
+
+
             }
 
         }
