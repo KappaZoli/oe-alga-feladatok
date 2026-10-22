@@ -65,63 +65,83 @@ namespace OE.ALGA.Optimalizalas
     {
         public readonly int m;
         public Func<int, T> generator;
-        public Func<T, int> josag;
+
+        // Itt a Func második paramétere (a visszatérési érték) float legyen!
+        public Func<T, float> josag;
+
         public int LepesSzam { get; set; }
 
-        public NyersEro(int m, Func<int, T> generator, Func<T, int> josag)
+        // A konstruktorban is float-ot kell várni a josag paraméternél
+        public NyersEro(int m, Func<int, T> generator, Func<T, float> josag)
         {
             this.m = m;
             this.generator = generator;
             this.josag = josag;
         }
-            
+
         public T OptimalisMegoldas()
         {
-            T o = generator(0);
-            for (int i = 1; i < m; i++)
+            T o = generator(1);
+            for (int i = 2; i <= m; i++)
             {
                 T x = generator(i);
-                if(josag(x) > josag(o))
+                LepesSzam++;
+                if (josag(x) > josag(o))
                 {
                     o = x;
                 }
             }
             return o;
         }
-
     }
 
     public class NyersEroHatizsakPakolas
     {
-       HatizsakProblema problema;
+        public HatizsakProblema problema;
+        public int LepesSzam { get; private set; }
 
         public NyersEroHatizsakPakolas(HatizsakProblema problema)
         {
             this.problema = problema;
         }
+        public bool[] Generator(int i)
+        {
+            bool[] pakolas = new bool[problema.n];
+            int v = i - 1; 
+            for (int j = 0; j < problema.n; j++)
+            {
+                pakolas[j] = (v & (1 << j)) != 0;
+            }
+            return pakolas;
+        }
 
-        public int LepesSzam { get; set; }
-
+        public float Josag(bool[] pakolas)
+        {
+            if (!problema.Ervenyes(pakolas))
+            {
+                return -1;
+            }
+            return problema.OsszErtek(pakolas);
+        }
 
         public bool[] OptimalisMegoldas()
         {
-            throw new NotImplementedException();
-        }
-        
-        public int OptimalisErtek()
-        {
-            throw new NotImplementedException();
+            
+            int m = (int)Math.Pow(2, problema.n);
+            NyersEro<bool[]> ne = new NyersEro<bool[]>(m, Generator, Josag);
+
+            bool[] optPakolas = ne.OptimalisMegoldas();
+
+            
+            this.LepesSzam = ne.LepesSzam;
+
+            return optPakolas;
         }
 
-        public bool[] Generator(int i)
+        public float OptimalisErtek()
         {
-            throw new NotImplementedException();
+            bool[] optPakolas = OptimalisMegoldas();
+            return Josag(optPakolas);
         }
-
-        public int Josag(bool[] pakolas)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
