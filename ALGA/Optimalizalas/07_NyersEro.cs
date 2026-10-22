@@ -105,13 +105,35 @@ namespace OE.ALGA.Optimalizalas
         }
         public bool[] Generator(int i)
         {
-            bool[] pakolas = new bool[problema.n];
+            bool[] parkolas = new bool[problema.n];
             int v = i - 1; 
             for (int j = 0; j < problema.n; j++)
             {
-                pakolas[j] = (v & (1 << j)) != 0;
+                parkolas[j] = (v & (1 << j)) != 0;
             }
-            return pakolas;
+            return parkolas;
+        }
+
+       
+
+        public bool[] OptimalisMegoldas()
+        {
+            
+            int m = (int)Math.Pow(2, problema.n);
+            NyersEro<bool[]> o = new NyersEro<bool[]>(m, Generator, Josag);
+
+            bool[] optPakolas = o.OptimalisMegoldas();
+
+            
+            this.LepesSzam = o.LepesSzam;
+
+            return optPakolas;
+        }
+
+        public float OptimalisErtek()
+        {
+            bool[] optPakolas = OptimalisMegoldas();
+            return Josag(optPakolas);
         }
 
         public float Josag(bool[] pakolas)
@@ -121,26 +143,6 @@ namespace OE.ALGA.Optimalizalas
                 return -1;
             }
             return problema.OsszErtek(pakolas);
-        }
-
-        public bool[] OptimalisMegoldas()
-        {
-            
-            int m = (int)Math.Pow(2, problema.n);
-            NyersEro<bool[]> ne = new NyersEro<bool[]>(m, Generator, Josag);
-
-            bool[] optPakolas = ne.OptimalisMegoldas();
-
-            
-            this.LepesSzam = ne.LepesSzam;
-
-            return optPakolas;
-        }
-
-        public float OptimalisErtek()
-        {
-            bool[] optPakolas = OptimalisMegoldas();
-            return Josag(optPakolas);
         }
     }
 }
