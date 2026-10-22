@@ -66,12 +66,11 @@ namespace OE.ALGA.Optimalizalas
         public readonly int m;
         public Func<int, T> generator;
 
-        // Itt a Func második paramétere (a visszatérési érték) float legyen!
         public Func<T, float> josag;
 
         public int LepesSzam { get; set; }
 
-        // A konstruktorban is float-ot kell várni a josag paraméternél
+
         public NyersEro(int m, Func<int, T> generator, Func<T, float> josag)
         {
             this.m = m;
