@@ -16,7 +16,7 @@ namespace OE.ALGA.Optimalizalas
         public HatizsakProblema(int n, int wmax, int[] w, float[] p)
         {
             this.n = n;
-            Wmax = wmax;
+            this.Wmax = wmax;
             this.w = w;
             this.p = p;
         }
@@ -28,20 +28,20 @@ namespace OE.ALGA.Optimalizalas
             {
                 if (logika[i])
                 {
-                    eredmeny += (int)w[i];
+                    eredmeny += w[i];
                 }
             }
             return eredmeny;
         }
 
-        public int OsszErtek(bool[] logika)
+        public float OsszErtek(bool[] logika)
         {
-            int eredmeny = 0;
+            float eredmeny = 0;
             for (int i = 0; i < n; i++)
             {
                 if (logika[i])
                 {
-                    eredmeny += (int)p[i];
+                    eredmeny += p[i];
                 }
             }
             return eredmeny;
