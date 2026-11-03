@@ -1,5 +1,5 @@
-﻿//using NUnit.Framework;
-//using OE.ALGA.Optimalizalas;
+﻿using NUnit.Framework;
+using OE.ALGA.Optimalizalas;
 
 //namespace OE.ALGA.Tesztek.Optimalizalas
 //{
