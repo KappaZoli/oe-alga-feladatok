@@ -114,12 +114,12 @@ namespace OE.ALGA.Adatszerkezetek
 
         public void UjEl(int honnan, int hova)
         {
-            M[honnan - 1, hova - 1] = true;
+            M[honnan, hova] = true;
         }
 
         public bool VezetEl(int honnan, int hova)
         {
-            return M[honnan - 1, hova - 1];
+            return M[honnan, hova];
         }
     }
 
