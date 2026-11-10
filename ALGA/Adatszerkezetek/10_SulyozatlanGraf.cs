@@ -17,35 +17,25 @@ namespace OE.ALGA.Adatszerkezetek
 
         public int Hova { get; set; }
 
-        public int CompareTo((object? obj)
+        public virtual int CompareTo(object obj)
         {
-            EgeszGrafEl teszt = (EgeszGrafEl)obj;
-            if (this.Honnan != obj.Honnan)
+            if ((obj != null && obj is EgeszGrafEl b))
             {
-                if (this.Honnan < obj.Honnan)
-                {
-                    return -1;
-                }
-                else if (this.Honnan > obj.Honnan)
-                {
-                    return 1;
-                }
+                if (Honnan != b.Honnan)
+                    return Honnan.CompareTo(b.Honnan);
+                else
+                    return Hova.CompareTo(b.Hova);
             }
             else
-            {
-                if (this.Hova < obj.Hova)
-                {
-                    return -1;
-                }
-                else if (this.Hova > obj.Hova)
-                {
-                    return 1;
-                }
-
-            }
-
-            return 0;
+                throw new InvalidOperationException();
         }
+        public override bool Equals(object obj)
+        {
+            if (obj is EgeszGrafEl b)
+                return Honnan == b.Honnan && Hova == b.Hova;
+            return false;
+        }
+
     }
 
 
@@ -73,9 +63,9 @@ namespace OE.ALGA.Adatszerkezetek
             return eredmeny;
         }
 
-        public FaHalmaz<int> Csucsok { get
+        public Halmaz<int> Csucsok { get
             {
-                FaHalmaz<int> eredmeny;
+                Halmaz<int> eredmeny= new FaHalmaz<int>();
 
                 for (int i = 0; i < n; i++)
                 {
@@ -88,7 +78,7 @@ namespace OE.ALGA.Adatszerkezetek
 
         public Halmaz<EgeszGrafEl> Elek { get
             {
-                Halmaz<EgeszGrafEl> eredmeny;
+                Halmaz<EgeszGrafEl> eredmeny= new FaHalmaz<EgeszGrafEl>();
                 for (int i = 0; i < n; i++)
                 {
                     for (int j = 0; j < n; j++)
@@ -106,7 +96,7 @@ namespace OE.ALGA.Adatszerkezetek
 
         public Halmaz<int> Szomszedai(int csucs)
         {
-            Halmaz<int> eredmeny;
+            Halmaz<int> eredmeny= new FaHalmaz<int>();
             for (int i = 0; i < n; i++)
             {
                 if (M[csucs, i])
@@ -129,15 +119,54 @@ namespace OE.ALGA.Adatszerkezetek
 
     public class GrafBejarasok
     {
-        public Halmaz<int> SzelessegiBejaras(int V, int E)
+        public Halmaz<V> SzelessegiBejaras<V,E>(Graf<V, E> G,V start, Action<V> muvelet) where V : IComparable<V> 
         {
+            Sor<V> S= new LancoltSor<V>();
+            S.Sorba(start);
+            Halmaz<V> F= new FaHalmaz<V>();
+            F.Beszur(start);
+            while (!S.Ures)
+            {
+                V k = S.Sorbol();
+                muvelet(k);
+
+                G.Szomszedai(k).Bejar(x =>
+                {
+                    if (!F.Eleme(x))
+                    {
+                        S.Sorba(x);
+                        F.Beszur(x);
+                    }
+                });
+            }
 
 
-
-            return null;
+            return F;
 
         }
 
+
+        public void MelysegiBejarasRekurzio<V,E>(Graf<V,E> g, V k, Halmaz<V> F, Action<V> muvelet) where V : IComparable<V>
+        {
+            F.Beszur(k);
+            muvelet(k);
+            
+            g.Szomszedai(k).Bejar(x =>
+            {   
+                if (!F.Eleme(x))
+                {
+                    MelysegiBejarasRekurzio(g, x, F, muvelet);
+                }
+            });
+            
+        }
+
+        public Halmaz<V> MelysegiBejaras<V, E>(Graf<V, E> G, V start, Action<V> muvelet) where V : IComparable<V>
+        {
+            Halmaz<V> F = new FaHalmaz<V>();
+            MelysegiBejarasRekurzio(G, start, F, muvelet);
+            return F;
+        }
 
 
 
