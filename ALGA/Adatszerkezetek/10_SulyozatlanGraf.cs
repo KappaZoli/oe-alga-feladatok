@@ -5,7 +5,7 @@ namespace OE.ALGA.Adatszerkezetek
 {
     // 10. heti labor feladat - Tesztek: 10_SulyozatlanGrafTesztek.cs
 
-    public class EgeszGrafEl : GrafEl<int>, IComparable
+    public class EgeszGrafEl : GrafEl<int>, IComparable<EgeszGrafEl>
     {
         public EgeszGrafEl(int honnan, int hova)
         {
@@ -17,7 +17,7 @@ namespace OE.ALGA.Adatszerkezetek
 
         public int Hova { get; set; }
 
-        public virtual int CompareTo(object obj)
+        public virtual int CompareTo(EgeszGrafEl obj)
         {
             if ((obj != null && obj is EgeszGrafEl b))
             {
@@ -41,11 +41,18 @@ namespace OE.ALGA.Adatszerkezetek
 
 
 
-    public class CsúcsmátrixSúlyozatlanEgészGráf : SulyozatlanGraf<int, EgeszGrafEl>
+    public class CsucsmatrixSulyozatlanEgeszGraf : SulyozatlanGraf<int, EgeszGrafEl>
     {
         int n;
 
         bool[,] M;
+
+        public CsucsmatrixSulyozatlanEgeszGraf(int n)
+        {
+            this.n = n;
+            M = new bool[n,n];
+        }
+
         public int CsucsokSzama { get { return n; } }
 
         public int ElekSzama { get { return ElekSz(); } }
@@ -119,7 +126,7 @@ namespace OE.ALGA.Adatszerkezetek
 
     public class GrafBejarasok
     {
-        public Halmaz<V> SzelessegiBejaras<V,E>(Graf<V, E> G,V start, Action<V> muvelet) where V : IComparable<V> 
+        public static Halmaz<V> SzelessegiBejaras<V,E>(Graf<V, E> G,V start, Action<V> muvelet) where V : IComparable<V> 
         {
             Sor<V> S= new LancoltSor<V>();
             S.Sorba(start);
@@ -146,7 +153,7 @@ namespace OE.ALGA.Adatszerkezetek
         }
 
 
-        public void MelysegiBejarasRekurzio<V,E>(Graf<V,E> g, V k, Halmaz<V> F, Action<V> muvelet) where V : IComparable<V>
+        public static void MelysegiBejarasRekurzio<V,E>(Graf<V,E> g, V k, Halmaz<V> F, Action<V> muvelet) where V : IComparable<V>
         {
             F.Beszur(k);
             muvelet(k);
@@ -161,7 +168,7 @@ namespace OE.ALGA.Adatszerkezetek
             
         }
 
-        public Halmaz<V> MelysegiBejaras<V, E>(Graf<V, E> G, V start, Action<V> muvelet) where V : IComparable<V>
+        public static Halmaz<V> MelysegiBejaras<V, E>(Graf<V, E> G, V start, Action<V> muvelet) where V : IComparable<V>
         {
             Halmaz<V> F = new FaHalmaz<V>();
             MelysegiBejarasRekurzio(G, start, F, muvelet);
